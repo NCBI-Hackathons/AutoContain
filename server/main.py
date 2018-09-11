@@ -1,6 +1,5 @@
 import tornado.ioloop
 import tornado.web
-import tornado.log
 import json
 
 class BaseHandler(tornado.web.RequestHandler):

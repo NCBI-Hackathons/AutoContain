@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<title>AutoContain</title>
-<body>
+    <title>AutoContain</title>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -105,58 +104,58 @@
 </head>
 <body>
 
-<h2>AutoContain</h2>
-<form class="form-inline">
-  <label class="BasePackage" for="SelectionPref">Package Preference</label>
-  <select class="custom-select my-1 mr-sm-2" id="SelectionPref">
-    <option selected>Choose...</option>
-    <option value="Python">Python</option>
-  </select>
-</form>
-<br></br>
-<br></br>
-<input type="text" id="PackageSelection" onkeyup="BasicSearch()" placeholder="Search for names.." title="Type in a name">
-<table id="PackageTable">
-  <script src="../js/main.js"></script>
-</table>
+    <h2>AutoContain</h2>
+    <form class="form-inline">
+        <label class="BasePackage" for="SelectionPref">Package Preference</label>
+        <select class="custom-select my-1 mr-sm-2" id="SelectionPref">
+            <option selected>Choose...</option>
+            <option value="Python">Python</option>
+        </select>
+    </form>
+    <br></br>
+    <br></br>
+    <input type="text" id="PackageSelection" onkeyup="BasicSearch()" placeholder="Search for names..." title="Type in a name">
+    <table id="PackageTable">
+        <script src="../js/main.js"></script>
+    </table>
 
-<script>
-function BasicSearch    () {
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("PackageSelection");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("PackageTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+    <script>
+    function BasicSearch    () {
+      var input, filter, table, tr, td, i;
+      input = document.getElementById("PackageSelection");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("PackageTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
       }
-    }       
-  }
-}
-</script>
-<form>
-<button id = "Submit", class="submitBtn">Submit</button>
-<script>
-     var tableControl = document.getElementById('PackageTable');
-     var jsonObj = [];
-     $('#Submit').click(function() {
-         $('input:checkbox:checked', tableControl).each(function(){
-             var row = $(this).closest('tr');
-             var version = $(row).find("select option:selected").text();
-             var package_selected = $(this).val();
-             var item = {}
-             item ["name"] = package_selected;
-             item ["version"] = version;
-             jsonObj.push(item);
+    }
+    </script>
+    <form>
+    <button id = "Submit" class="submitBtn">Submit</button>
+    <script>
+         var tableControl = document.getElementById('PackageTable');
+         var jsonObj = [];
+         $('#Submit').click(function() {
+             $('input:checkbox:checked', tableControl).each(function(){
+                 var row = $(this).closest('tr');
+                 var version = $(row).find("select option:selected").text();
+                 var package_selected = $(this).val();
+                 var item = {}
+                 item ["name"] = package_selected;
+                 item ["version"] = version;
+                 jsonObj.push(item);
+             });
          });
-     });
-</script>
-</div>
-</form>
+    </script>
+    </div>
+    </form>
 </body>
 </html>
