@@ -1,11 +1,31 @@
-# Autocontain
+# AutoContain
 
-AutoContain is a web-based application for generating Dockerfiles and images for scientific applications. Initially it is focused on the Anaconda Python repositories.
+## Introduction
+AutoContain is a web-based application for generating Dockerfiles and Docker images for scientific applications. Container technologies provide a valuable resource for bioinformaticians and data analysts within the scientific community. By bundling and packaging a complete toolchain or workflow, a container can provide portability, automation, and reproducibility.    
 
-The application will allow users to select various components of a Docker image including a base Docker image, programming language packages and dependencies, operating system applications, imported data, and volume mapping.
+This web application is meant for scientists who want a reproducible Docker image for their scientific projects and applications, but who do not have much experience in writing Dockerfiles or have trouble managing the dependencies that their project may rely on. The user-friendly web based GUI guides a user through all the steps to generate an appropriate Docker image.
 
-This web application is meant for scientists who want a reproducible Docker image for their scientific projects and applications, but who don't have much experience in writing Dockerfiles or who don't want to track down specific version numbers for all of the dependencies that their project require.
+## Features
+* A selection of various base languages (eg. Python, R, Perl, Java, etc...)
+* Curation of relevant packages from popular language-specific package managers for easy accessibility
+* Option to utilize existing projects from GitHub repositories
+* Option to include data files in Docker image or mount an existing data volume
+* Hosting of generated Docker images in public Docker Hub repository
+* Generation of raw Dockerfile 
+* User-friendly instructions for using Docker images
+* Easy deployment instructions for the AutContain application
 
-To speed up development, users can point to an existing git repository to be imported into the image.
+### Future Development
+* Support for multiple programming languages and package managers
+* Support for third-party tools and binaries
+* Automated deployment of Jupyter Notebook environment
+* GUI based pipeline generation and management
+* Container based scalability through third-party tools
+* Other deployment options (eg. desktop application)
 
-The application will initially be hosted on an AWS instance that can build images to be automatically uploaded to DockerHub. The goal of the project is to eventually allow the project to be deployed and managed on organization's internal servers.
+-----
+
+## Installation
+* Prerequisites: Docker
+
+1. 
