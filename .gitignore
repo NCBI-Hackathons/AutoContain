@@ -1,0 +1,29 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+# IntelliJ
+.idea
+.idea/
+*.iml
+*.iws
+
+# Visual studio code
+.vscode
+devindex.*
+
+# Mac
+.DS_Store
+
+# Python
+venv/
+.python-version
+
+# Docker settings
+.env
+
+# Dependency directories
+node_modules
+bower_components
+package-lock.json
