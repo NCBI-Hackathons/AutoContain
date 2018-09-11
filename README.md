@@ -6,7 +6,7 @@ AutoContain is a web-based application for generating Dockerfiles and Docker ima
 This web application is meant for scientists who want a reproducible Docker image for their scientific projects and applications, but who do not have much experience in writing Dockerfiles or have trouble managing the dependencies that their project may rely on. The user-friendly web based GUI guides a user through all the steps to generate an appropriate Docker image.
 ## Table of Contents
 1. [Features](#Features)
-2. [Future Development](#Future Development)
+2. [Future Development](#Future-Development)
 3. [Installation](#Installation)
 4. [Usage](#Usage)
 5. [Citing `AutoContain`](#citing-AutoContain)
@@ -22,7 +22,7 @@ This web application is meant for scientists who want a reproducible Docker imag
 * User-friendly instructions for using Docker images
 * Easy deployment instructions for the AutContain application
 
-## Future Development
+## Future-Development
 * Support for multiple programming languages and package managers
 * Support for third-party tools and binaries
 * Automated deployment of Jupyter Notebook environment
@@ -32,10 +32,16 @@ This web application is meant for scientists who want a reproducible Docker imag
 
 
 ## Installation
-* Prerequisites: Docker
-1. 
+* Prerequisites: 
+  1. System Requirements : Unix/Linux OS Variants 
+  2. [Docker Installation]:(https://docs.docker.com/install/) 
+  3. Internet Browser (Chrome/Firefox)
+## Usage
+1. [Open a web-GUI]:(put link here)
+2. Select a Base Programming Language from a dropdown menu
+3. Select packages and appropriate versions from a list of available packages table (Type name in a search-box for quick lookup) 
 
-## Citing AutoContain
+## Citing-AutoContain
 Until `AutoContain` is published, please cite using its [github_repo](https://github.com/NCBI-Hackathons/AutoContain).
 
 ## Troubleshooting
