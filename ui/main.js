@@ -8,7 +8,3 @@ function loadPackages(filePath) {
     return xhr.responseText;
   };
 }
-
-function submit() {
-
-}

@@ -1,18 +1,16 @@
 import tornado.ioloop
 import tornado.web
+import tornado.log
 import json
 
-class MainHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.write("Hello, world")
-
-class CondaHandler(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
 
+class CondaHandler(BaseHandler):
     def get(self, filePath):
-        with open(filePath) as f:
+        with open("packages/conda/" + filePath) as f:
             data = json.load(f)
 
         condaPackages = {}
@@ -35,7 +33,6 @@ class CondaHandler(tornado.web.RequestHandler):
 
 def make_app():
     return tornado.web.Application([
-        (r"/", MainHandler),
         (r"/packages/(.*)", CondaHandler)
     ])
 

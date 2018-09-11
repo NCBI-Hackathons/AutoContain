@@ -4,6 +4,8 @@ ARG SOURCE_FOLDER="./"
 
 COPY ${SOURCE_FOLDER} .
 
+RUN pip install tornado==5.1
+
 EXPOSE 8888
 
-ENTRYPOINT ["python", "${SOURCE_FOLDER}/main.py"]
+ENTRYPOINT ["python", "main.py"]
