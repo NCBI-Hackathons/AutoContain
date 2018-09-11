@@ -1,0 +1,19 @@
+#packageTable {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 18px;
+}
+
+#packageTable th, #packageTable td {
+    text-align: left;
+    padding: 12px;
+}
+
+#packageTable tr {
+    border-bottom: 1px solid #ddd;
+}
+
+#packageTable tr.header, #packageTable tr:hover {
+    background-color: #f1f1f1;
+}
