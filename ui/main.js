@@ -35,20 +35,9 @@ document.getElementById('packageTable').innerHTML = results;
 // Triggered on form submit. Retrieves elements.
 let selectedPackages = {};
 $('#submit').click(function () {
-  console.log('triggered');
   $('input:checkbox:checked').each((key, item) => {
-    selectedPackages[item.name] = '';
+    selectedPackages[item.name] = $('#version-' + item.name + ' option:selected').text();
   });
-  // $('input:checkbox:checked', tableControl).each(function () {
-  //   var row = $(this).closest('tr');
-  //   var version = $(row).find("select option:selected").text();
-  //   var package_selected = $(this).val();
-  //   var item = {};
-  //   item ["name"] = package_selected;
-  //   item ["version"] = version;
-  //   jsonObj.push(item);
-  // });
-  // console.log(jsonObj););
 });
 
 function search () {

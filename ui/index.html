@@ -35,9 +35,17 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Conda Packages</span>
             </div>
-            <input class="form-control" type="text" onkeyup="basicSearch()" placeholder="Search for packages..." title="Type in a name">
+            <input class="form-control" type="text" onkeyup="search()" placeholder="Search for packages...">
         </div>
         <table class="table" id="packageTable"></table>
+
+        <div class="input-group mb-3">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="dataInput">
+                <label class="custom-file-label" for="dataInput">Choose file</label>
+            </div>
+        </div>
+
         <button id="submit" class="btn btn-success float-right">Submit</button>
     </div>
 
