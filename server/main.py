@@ -7,6 +7,10 @@ class MainHandler(tornado.web.RequestHandler):
         self.write("Hello, world")
 
 class CondaHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+
     def get(self, filePath):
         with open(filePath) as f:
             data = json.load(f)
@@ -27,8 +31,7 @@ class CondaHandler(tornado.web.RequestHandler):
                         version
                     ]
                 }
-
-        self.write(condaPackages)
+        self.write(json.dumps(condaPackages))
 
 def make_app():
     return tornado.web.Application([

@@ -1,0 +1,9 @@
+FROM python:3.7-slim
+
+ARG SOURCE_FOLDER="./"
+
+COPY ${SOURCE_FOLDER} .
+
+EXPOSE 8888
+
+ENTRYPOINT ["python", "${SOURCE_FOLDER}/main.py"]

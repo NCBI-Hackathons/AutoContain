@@ -1,35 +1,12 @@
-function loadAnacondaPackages(filePath) {
-  let condaPackages = {},
-    re = /^([0-9]|[1-9][0-9]*)\.([0-9]|[1-9][0-9]*)\.([0-9]|[1-9][0-9]*)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$/;
+function loadPackages(filePath) {
+  let xhr = new XMLHttpRequest();
 
-  return $.getJSON(filePath, (data) => {
-    for (package in data.packages) {
-      let name = data.packages[package].name,
-        version = data.packages[package].version;
+  xhr.open('GET', 'http://localhost:8888/packages/' + filePath, true);
+  xhr.send();
 
-      if (condaPackages[name] && condaPackages[name].versions) {
-        if (condaPackages[name].versions.indexOf(version) === -1 && re.test(version)) {
-          condaPackages[name].versions.push(version);
-        }
-      } else {
-        if (name !== 'constructor') {
-          condaPackages[name] = {
-            versions: [
-              version
-            ]
-          };
-        }
-      }
-    }
-    return condaPackages;
-  });
-}
-
-function loadPackages() {
-  let mainChannel = loadAnacondaPackages('./anacondaPackages.json'),
-    biocondaChannel = loadAnacondaPackages('./biocondaPackages.json');
-
-  return {main: mainChannel, bioconda: biocondaChannel};
+  xhr.onreadystatechange = function () {
+    return xhr.responseText;
+  };
 }
 
 function submit() {
