@@ -38,7 +38,7 @@ The application will allow users to select various components of a Docker image 
   2. [Docker](https://docs.docker.com/install/) 
   3. Internet Browser (Chrome/Firefox)
 ## Usage
-1. [Open a web-GUI]:(Link)
+1. [Open a web-GUI](Link)
 2. Select a Base Programming Language from a dropdown menu
 3. Select packages and appropriate versions from a list of available packages table (Type name in a search-box for quick lookup)
 4. On Submit, AutoContain builds a dockerfile automatically from user selected tools.
