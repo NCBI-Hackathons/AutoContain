@@ -14,7 +14,7 @@ def dockerFileStringFromDict(jsonDict):
     # 1. Write base image date
     dockerFileString.write("FROM " + jsonDict["base_image"]+"\n")
     # dockerFileString.write("\n")
-    dockerFileString.write("RUN conda env create -f environment.yml\n")
+    dockerFileString.write("RUN conda env update -f environment.yml\n")
     osPackageStringLine = appendOSPackages(jsonDict)
     dockerFileString.write(osPackageStringLine)
     volumeStringLine = appendVolume(jsonDict)
@@ -59,6 +59,7 @@ def appendVolume(jsonDict):
 def generateEnvironmentEnv(jsonDict,outputPath):
     environmentYmlString = io.StringIO()
     environmentDependenciesYmlString = io.StringIO()
+    environmentDependenciesYmlString.write("name: " + jsonDict['id']+"\n")
     environmentDependenciesYmlString.write("dependencies:" + "\n")
     dependencies = jsonDict['dependencies']
     for dependency in dependencies:
