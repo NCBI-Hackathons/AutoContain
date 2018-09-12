@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  server:
+    container_name: server
+    image: autocontain/server
+    ports:
+      - 8888:8888
+
+  web:
+    container_name: web
+    image: autocontain/web-app
+    ports:
+      - 80:80
+    links:
+      - server:localhost
