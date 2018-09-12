@@ -30,6 +30,7 @@ This web application is meant for scientists who want a reproducible Docker imag
 * Container based scalability through third-party tools
 * Other deployment options (eg. desktop application)
 
+The application will allow users to select various components of a Docker image including a base Docker image, programming language packages and dependencies, operating system applications, imported data, and volume mapping.
 
 ## Installation
 * Prerequisites: 
