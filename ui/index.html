@@ -13,7 +13,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
@@ -27,17 +27,32 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Programming Language</span>
             </div>
-            <select class="custom-select" id="languageSelect">
-                <option selected value="python3.7">Python 3.7</option>
+            <select class="custom-select" id="base">
+                <option selected value="autocontain/docker-base:python3.7">Python 3.7</option>
             </select>
+        </div>
+        <div class="input-group mb-3" style="width: 50%;">
+            <div class="input-group-prepend">
+                <span class="input-group-text">GitHub Repository</span>
+            </div>
+            <input class="form-control" type="text" id="github" placeholder="Url">
         </div>
         <div class="input-group mb-3" style="width: 50%;">
             <div class="input-group-prepend">
                 <span class="input-group-text">Conda Packages</span>
             </div>
-            <input class="form-control" type="text" onkeyup="search()" placeholder="Search for packages...">
+            <input class="form-control" type="text" id="search" onkeyup="search()" placeholder="Search for packages...">
         </div>
-        <table class="table" id="packageTable"></table>
+        <table class="table" id="packageTable">
+            <thead>
+                <tr class="header" style="display: block;">
+                    <th style="width: 50%;">Package</th>
+                    <th>Versions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" style="display: block; overflow-y: scroll; height: 300px; width: 100%;">
+            </tbody>
+        </table>
 
         <div class="input-group mb-3">
             <div class="custom-file">

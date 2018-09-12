@@ -1,51 +1,34 @@
-function loadPackages(filePath) {
-  let xhr = new XMLHttpRequest();
-
-  xhr.open('GET', 'http://localhost:8888/packages/' + filePath, true);
-  xhr.send();
-
-  xhr.onreadystatechange = function () {
-    return xhr.responseText;
-  };
+// Calls /packages API to load json object of conda packages
+function getPackages(filePath) {
+  return $.ajax({
+    method: 'GET',
+    url: 'http://localhost:8888/packages/' + filePath
+  });
 }
-
-let items = [
-  {
-    name: 'test',
-    versions: ['1', '2']
-  },
-  {
-    name: 'test2',
-    versions: ['4', '5']
-  }
-];
 
 // Dynamically generates table of packages
-let results = '<tr class="header"><th style="width:20%;">Package</th><th style="width:20%;">Versions</th></tr>';
-for(key in items) {
-  var item = items[key];
-  results += `<tr><td><div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" name="${item.name}" value="${item.name}" id="package-${item.name}"><label class="custom-control-label" for="package-${item.name}">${item.name}</label></div></td><td><select class="custom-select" id="version-${item.name}">`;
-  for(x in items[key].versions) {
-    results += '<option value="' + items[key].versions[x] + '">' + items[key].versions[x] + '</option>';
+function loadTable(items) {
+  let results = '';
+  for(key in items) {
+    var versions = items[key].versions;
+    results += `<tr><td><div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" name="${key}" value="${key}" id="package-${key}"><label class="custom-control-label" for="package-${key}">${key}</label></div></td><td><select class="custom-select" id="version-${key}">`;
+    for(x in versions) {
+      results += '<option value="' + versions[x] + '">' + versions[x] + '</option>';
+    }
+    results += '</select></td></tr>';
   }
-  results += '</select></td></tr>';
+  document.getElementById('tableBody').innerHTML = results;
 }
-document.getElementById('packageTable').innerHTML = results;
 
-// Triggered on form submit. Retrieves elements.
-let selectedPackages = {};
-$('#submit').click(function () {
-  $('input:checkbox:checked').each((key, item) => {
-    selectedPackages[item.name] = $('#version-' + item.name + ' option:selected').text();
-  });
-});
-
-function search () {
+// Basic search through table of packages
+function search() {
   var input, filter, table, tr, td, i;
-  input = document.getElementById("PackageSelection");
+  input = document.getElementById("search");
   filter = input.value.toUpperCase();
   table = document.getElementById("packageTable");
   tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[0];
     if (td) {
@@ -57,3 +40,49 @@ function search () {
     }
   }
 }
+
+// Loads packages from the conda main and bioconda channels as a JSON object
+function initPackages() {
+  return getPackages('main.json').then((main) => {
+    return getPackages('bioconda.json').then((conda) => {
+      return Object.assign(JSON.parse(main), JSON.parse(conda));
+    });
+  });
+}
+
+
+
+// Triggered on form submit, retrieves values from form
+$('#submit').click(function () {
+  // Request data object
+  let body = {
+    id: '',
+    project_repo: '',
+    base_image: '',
+    dependencies: {},
+    volumes: {},
+    os_packages: {}
+  };
+
+  body.project_repo = $('#github').val();
+  body.base_image = $('#base').val();
+  $('input:checkbox:checked').each((key, item) => {
+    body.dependencies[item.name] = $('#version-' + item.name + ' option:selected').text();
+  });
+  body.id = new Date().valueOf();
+  submit(body);
+});
+
+// Submit request to /submit API
+function submit(item) {
+  $.ajax({
+    method: 'POST',
+    url: 'http://localhost:8888/submit',
+    data: JSON.stringify(item)
+  });
+}
+
+// Initialization
+initPackages().then((data) => {
+  loadTable(data);
+});
