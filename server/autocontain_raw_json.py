@@ -1,69 +1,30 @@
 import sys
 import json
 import io
+import os
 
-def main():
-    if len(sys.argv) > 1:
-        print("length of argument is: " + str(len(sys.argv)))
-        print(sys.argv[1])
-        jsonFile = open(sys.argv[1])
-        jsonDict = readFileAsJsonString(jsonFile)
-
-        dockerFileString = dockerFileStringFromDict(jsonDict)
-
-        writeDockerFile(dockerFileString)
-
-        generateEnvironmentEnv(jsonDict)
-
-    else:
-        print("No arguments")
-
-
-def readFileAsJsonString(jsonFile):
-    jsonString = jsonFile.read()
-    jsonDict = loadJson(jsonString)
-
-    return jsonDict
-
-
-def loadJson(jsonString):
-    #load json into json string
-    data = json.loads(jsonString)
-    print(type(data))
-
-    for entry in data:
-        print(entry + "Value: " + str(data[entry]))
-
-    return data
+def Wrapper(jsonDict,outputPath):
+    dockerFileString = dockerFileStringFromDict(jsonDict)
+    writeDockerFile(dockerFileString,outputPath)
+    generateEnvironmentEnv(jsonDict,outputPath)
 
 def dockerFileStringFromDict(jsonDict):
-    print ("Create file from jsonDict")
-
+    print ("Created file from jsonDict")
     dockerFileString = io.StringIO()
-
     # 1. Write base image date
-    baseImageDict = jsonDict["base_image"]
-    baseImageStringLine = appendBaseImageName(baseImageDict)
-    dockerFileString.write(baseImageStringLine)
-
-    dockerFileString.write("\n")
-
-    dockerFileString.write("RUN conda create -f environment.yml\n")
-
-
+    dockerFileString.write("FROM " + jsonDict["base_image"]+"\n")
+    # dockerFileString.write("\n")
+    dockerFileString.write("RUN conda env create -f environment.yml\n")
     osPackageStringLine = appendOSPackages(jsonDict)
     dockerFileString.write(osPackageStringLine)
-
     volumeStringLine = appendVolume(jsonDict)
     dockerFileString.writelines(volumeStringLine)
-
-    dockerFileString.write("EXPOSE 80\n")
-    dockerFileString.write("CMD [\"python\", \"app.py\"]\n")
+    dockerFileString.write("CMD /bin/bash\n")
 
     return dockerFileString.getvalue()
 
-def writeDockerFile(dockerFileString):
-    dockerFile = open("DOCKERFILE", "w")
+def writeDockerFile(dockerFileString,outputPath):
+    dockerFile = open(os.path.join(outputPath,"DOCKERFILE"), "w")
     dockerFile.write(dockerFileString)
     dockerFile.close()
 
@@ -86,7 +47,6 @@ def appendOSPackages(jsonDict):
 
     return "RUN apt-get update && apt-get install -y " + osPackageFileString.getvalue() + "\n"
 
-
 def appendVolume(jsonDict):
     volumeDict = jsonDict["volumes"]
 
@@ -96,35 +56,15 @@ def appendVolume(jsonDict):
 
     return volumeString.getvalue()
 
-
-def generateEnvironmentEnv(jsonDict):
+def generateEnvironmentEnv(jsonDict,outputPath):
     environmentYmlString = io.StringIO()
     environmentDependenciesYmlString = io.StringIO()
-
-    repositoryDict = jsonDict["repository"]
-    condaChannelsDict = repositoryDict["conda"]
-
-    environmentYmlString.write("name: " + jsonDict["name"] + "\n")
-    environmentYmlString.write("channels:\n")
     environmentDependenciesYmlString.write("dependencies:" + "\n")
-
-    if condaChannelsDict is not None:
-
-        for condaChannel in condaChannelsDict:
-            environmentYmlString.write("    - " + str(condaChannel) + "\n")
-
-            channelDependencies = condaChannelsDict[condaChannel]
-            if channelDependencies is not None:
-
-                for dependency in channelDependencies:
-                    environmentDependenciesYmlString.write("    - " + str(dependency) + "=" + channelDependencies[dependency])
-                    environmentDependenciesYmlString.write("\n")
-
-    environmentYmlFile = open("environment.yml","w")
+    dependencies = jsonDict['dependencies']
+    for dependency in dependencies:
+        environmentDependenciesYmlString.write("    - " + str(dependency) + "=" + dependencies[dependency])
+        environmentDependenciesYmlString.write("\n")
+    environmentYmlFile = open(os.path.join(outputPath,"environment.yml"),"w")
     environmentYmlFile.write(environmentYmlString.getvalue())
     environmentYmlFile.write(environmentDependenciesYmlString.getvalue())
-
     environmentYmlFile.close()
-
-
-main()

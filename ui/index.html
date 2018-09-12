@@ -11,151 +11,61 @@
 
     <title>AutoContain</title>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<style>
-* {
-  box-sizing: border-box;
-}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-#PackageSelection {
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-}
-
-#PackageTable {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ddd;
-  font-size: 18px;
-}
-
-#PackageTable th, #PackageTable td {
-  text-align: left;
-  padding: 12px;
-}
-
-#PackageTable tr {
-  border-bottom: 1px solid #ddd;
-}
-
-#PackageTable tr.header, #PackageTable tr:hover {
-  background-color: #f1f1f1;
-}
-.submitBtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
-.submitBtn:hover, .submitBtn:focus {
-    background-color: #3e8e41;
-}
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f6f6f6;
-    min-width: 230px;
-    overflow: auto;
-    border: 1px solid #ddd;
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown a:hover {background-color: #ddd;}
-
-.show {display: block;}
-
-.submitBtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
-.submitBtn:hover, .submitBtn:focus {
-    background-color: #3e8e41;
-}
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div style="width: 80%; margin: 0 auto;">
+    <h1 style="text-align: center;">AutoContain</h1>
+    <div style="width: 80%; margin: 0 auto;">
+        <div class="input-group mb-3" style="width: 30%;">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Programming Language</span>
+            </div>
+            <select class="custom-select" id="base">
+                <option selected value="autocontain/docker-base:python3.7">Python 3.7</option>
+            </select>
+        </div>
+        <div class="input-group mb-3" style="width: 50%;">
+            <div class="input-group-prepend">
+                <span class="input-group-text">GitHub Repository</span>
+            </div>
+            <input class="form-control" type="text" id="github" placeholder="Url">
+        </div>
+        <div class="input-group mb-3" style="width: 50%;">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Conda Packages</span>
+            </div>
+            <input class="form-control" type="text" id="search" onkeyup="search()" placeholder="Search for packages...">
+        </div>
+        <table class="table" id="packageTable">
+            <thead>
+                <tr class="header" style="display: block;">
+                    <th style="width: 10%;">Package</th>
+                    <th style="width: 10%;">Versions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" style="display: block; overflow-y: scroll; height: 300px; width: 100%;">
+            </tbody>
+        </table>
 
-    <h2>AutoContain</h2>
-    <form class="form-inline">
-        <label class="BasePackage" for="SelectionPref">Package Preference</label>
-        <select class="custom-select my-1 mr-sm-2" id="SelectionPref">
-            <option selected>Choose...</option>
-            <option value="Python">Python</option>
-        </select>
-    </form>
-    <br></br>
-    <br></br>
-    <input type="text" id="PackageSelection" onkeyup="BasicSearch()" placeholder="Search for names..." title="Type in a name">
-    <table id="PackageTable">
-        <script src="../js/main.js"></script>
-    </table>
+        <div class="input-group mb-3">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="dataInput">
+                <label class="custom-file-label" for="dataInput">Choose file</label>
+            </div>
+        </div>
 
-    <script>
-    function BasicSearch    () {
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("PackageSelection");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("PackageTable");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-    </script>
-    <form>
-    <button id = "Submit" class="submitBtn">Submit</button>
-    <script>
-         var tableControl = document.getElementById('PackageTable');
-         var jsonObj = [];
-         $('#Submit').click(function() {
-             $('input:checkbox:checked', tableControl).each(function(){
-                 var row = $(this).closest('tr');
-                 var version = $(row).find("select option:selected").text();
-                 var package_selected = $(this).val();
-                 var item = {}
-                 item ["name"] = package_selected;
-                 item ["version"] = version;
-                 jsonObj.push(item);
-             });
-         });
-    </script>
+        <button id="submit" class="btn btn-success float-right">Submit</button>
     </div>
-    </form>
+
+    <script src="main.js"></script>
+</div>
+
 </body>
 </html>
