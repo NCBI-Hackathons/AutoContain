@@ -30,9 +30,15 @@ class CondaHandler(BaseHandler):
                 }
         self.write(json.dumps(condaPackages))
 
+class SubmitHandler(BaseHandler):
+    def post(self):
+        data = tornado.escape.json_decode(self.request.body)
+        print(data)
+
 def make_app():
     return tornado.web.Application([
-        (r"/packages/(.*)", CondaHandler)
+        (r"/packages/(.*)", CondaHandler),
+        (r"/submit", SubmitHandler)
     ])
 
 if __name__ == "__main__":
