@@ -1,7 +1,6 @@
 import tornado.ioloop
 import tornado.web
 import json
-import urllib
 
 class BaseHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
