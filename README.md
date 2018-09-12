@@ -35,12 +35,17 @@ The application will allow users to select various components of a Docker image 
 ## Installation
 * Prerequisites: 
   1. System Requirements : Unix/Linux OS Variants 
-  2. [Docker Installation]:(https://docs.docker.com/install/) 
+  2. [Docker](https://docs.docker.com/install/) 
   3. Internet Browser (Chrome/Firefox)
 ## Usage
-1. [Open a web-GUI]:(put link here)
+1. [Open a web-GUI]:(Link)
 2. Select a Base Programming Language from a dropdown menu
-3. Select packages and appropriate versions from a list of available packages table (Type name in a search-box for quick lookup) 
+3. Select packages and appropriate versions from a list of available packages table (Type name in a search-box for quick lookup)
+4. On Submit, AutoContain builds a dockerfile automatically from user selected tools.
+5. The link to download dockerfile will be available for further usage.
+6. There will also be an option to create a docker image and added on DockerHub repositories.
+ 
+* If you want to find out more about DockerHub Repositories or how to use already built repositories available for public use please visit (https://hub.docker.com/explore/) 
 
 ## Citing-AutoContain
 Until `AutoContain` is published, please cite using its [github_repo](https://github.com/NCBI-Hackathons/AutoContain).
