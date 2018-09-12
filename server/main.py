@@ -1,6 +1,7 @@
 import tornado.ioloop
 import tornado.web
 import json
+import utils
 
 class BaseHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
@@ -34,6 +35,9 @@ class SubmitHandler(BaseHandler):
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
         print(data)
+        folderPath = str(data['id'])
+        utils.mkdir(folderPath)
+        self.write('testing')
 
 def make_app():
     return tornado.web.Application([

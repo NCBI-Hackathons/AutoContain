@@ -44,13 +44,9 @@ function search() {
 // Loads packages from the conda main and bioconda channels as a JSON object
 function initPackages() {
   return getPackages('main.json').then((main) => {
-    return getPackages('bioconda.json').then((conda) => {
-      return Object.assign(JSON.parse(main), JSON.parse(conda));
-    });
+    return JSON.parse(main);
   });
 }
-
-
 
 // Triggered on form submit, retrieves values from form
 $('#submit').click(function () {
@@ -73,12 +69,27 @@ $('#submit').click(function () {
   submit(body);
 });
 
+function download(filename, text) {
+  let element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
 // Submit request to /submit API
 function submit(item) {
-  $.ajax({
+  return $.ajax({
     method: 'POST',
     url: 'http://localhost:8888/submit',
     data: JSON.stringify(item)
+  }).done((data) => {
+    download('Dockerfile', data);
   });
 }
 
