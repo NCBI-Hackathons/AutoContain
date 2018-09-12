@@ -69,6 +69,7 @@ $('#submit').click(function () {
   submit(body);
 });
 
+// Forces a file download in browser with hidden link attribute
 function download(filename, text) {
   let element = document.createElement('a');
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));

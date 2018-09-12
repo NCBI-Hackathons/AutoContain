@@ -1,7 +1,10 @@
 import tornado.ioloop
 import tornado.web
 import json
-import utils
+import os
+
+import generateFiles
+import dockerUtils
 
 class BaseHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
@@ -37,10 +40,13 @@ class CondaHandler(BaseHandler):
 class SubmitHandler(BaseHandler):
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
-        print(data)
         folderPath = str(data['id'])
-        utils.mkdir(folderPath)
-        self.write('testing')
+        os.makedirs(folderPath)
+        dockerfile = generateFiles.run(data, folderPath)
+        self.write(dockerfile)
+
+        dockerUtils.build_docker(folderPath)
+        dockerUtils.push_docker(folderPath)
 
 def make_app():
     return tornado.web.Application([
