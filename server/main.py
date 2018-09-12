@@ -8,6 +8,9 @@ class BaseHandler(tornado.web.RequestHandler):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
 
+    def get(self):
+        self.write('AutoContain APIs')
+
 class CondaHandler(BaseHandler):
     def get(self, filePath):
         with open("packages/conda/" + filePath) as f:
@@ -41,6 +44,7 @@ class SubmitHandler(BaseHandler):
 
 def make_app():
     return tornado.web.Application([
+        (r"/", BaseHandler),
         (r"/packages/(.*)", CondaHandler),
         (r"/submit", SubmitHandler)
     ])
