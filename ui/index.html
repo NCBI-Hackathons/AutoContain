@@ -25,6 +25,18 @@
     <div style="width: 80%; margin: 0 auto;">
         <div class="input-group mb-3" style="width: 30%;">
             <div class="input-group-prepend">
+                <span class="input-group-text">Author</span>
+            </div>
+            <input class="form-control" type="text" id="author" placeholder="First and Last Name">
+        </div>
+        <div class="input-group mb-3" style="width: 30%;">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Email</span>
+            </div>
+            <input class="form-control" type="email" id="email" placeholder="Contact email">
+        </div>
+        <div class="input-group mb-3" style="width: 30%;">
+            <div class="input-group-prepend">
                 <span class="input-group-text">Programming Language</span>
             </div>
             <select class="custom-select" id="base">
@@ -54,14 +66,59 @@
             </tbody>
         </table>
 
-        <div class="input-group mb-3">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="dataInput">
-                <label class="custom-file-label" for="dataInput">Choose file</label>
-            </div>
-        </div>
+        <!--<div class="input-group mb-3">-->
+            <!--<div class="custom-file">-->
+                <!--<input type="file" class="custom-file-input" id="dataInput">-->
+                <!--<label class="custom-file-label" for="dataInput">Choose file</label>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <button id="submit" class="btn btn-success float-right">Submit</button>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialog" id="triggerDialog" hidden>test</button>
+
+    <div class="modal fade" id="dialog" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Usage Instructions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Thank you for using AutoContain!
+                    <br>
+                    To use your image, be sure that you have Docker installed an running on your computer. <a href="https://store.docker.com/search?type=edition&offering=community">Installation instructions.</a>
+                    <br>
+                    <br>
+                    Use this command to pull and run your Docker image:
+                    <br>
+                    <br>
+                    docker run -it autocontain/image:<span id="imageID"></span>
+                    <br>
+                    <br>
+                    <strong>**Please note that storage on Docker Hub is temporary and guaranteed.</strong>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loading" id="triggerLoading" hidden>test</button>
+
+    <div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>Loading...</h3>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close" hidden></button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="main.js"></script>

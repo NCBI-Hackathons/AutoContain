@@ -53,6 +53,8 @@ $('#submit').click(function () {
   // Request data object
   let body = {
     id: '',
+    author: '',
+    email: '',
     project_repo: '',
     base_image: '',
     dependencies: {},
@@ -60,6 +62,8 @@ $('#submit').click(function () {
     os_packages: {}
   };
 
+  body.author = $('#author').val();
+  body.email = $('#email').val();
   body.project_repo = $('#github').val();
   body.base_image = $('#base').val();
   $('input:checkbox:checked').each((key, item) => {
@@ -85,12 +89,17 @@ function download(filename, text) {
 
 // Submit request to /submit API
 function submit(item) {
+  $('#triggerLoading').trigger('click');
   return $.ajax({
     method: 'POST',
     url: 'http://localhost:8888/submit',
     data: JSON.stringify(item)
   }).done((data) => {
-    download('Dockerfile', data);
+    $('#close').trigger('click');
+    data = JSON.parse(data);
+    document.getElementById('imageID').innerText = data.id;
+    $("#triggerDialog").trigger('click');
+    download('Dockerfile', data.file);
   });
 }
 

@@ -7,5 +7,3 @@ def build_docker(folderPath):
 
 def push_docker(id):
     subprocess.run(['docker', 'push', 'autocontain/image:' + id])
-
-

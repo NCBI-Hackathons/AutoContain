@@ -43,7 +43,10 @@ class SubmitHandler(BaseHandler):
         folderPath = str(data['id'])
         os.makedirs(folderPath)
         dockerfile = generateFiles.run(data, folderPath)
-        self.write(dockerfile)
+        self.write(json.dumps({
+            "id": folderPath,
+            "file": dockerfile
+        }))
 
         dockerUtils.build_docker(folderPath)
         dockerUtils.push_docker(folderPath)

@@ -12,18 +12,26 @@ def run(jsonDict, outputPath):
 # Generates a Dockerfile as a string
 def getDockerfile(jsonDict):
     dockerFileString = io.StringIO()
-    # 1. Write base image date
-    dockerFileString.write("FROM " + jsonDict["base_image"] + "\n")
-    dockerFileString.write("RUN conda install -y ")
-    for package in jsonDict["dependencies"]:
-        dockerFileString.write(str(package) + "==" + jsonDict["dependencies"][package] + " ")
+
+    dockerFileString.write("FROM " + jsonDict["base_image"] + "\n\n")
+
+    dockerFileString.write('LABEL author="' + jsonDict["author"] + '"\n')
+    dockerFileString.write('LABEL email="' + jsonDict["email"] + '"\n\n')
+
+    if(len(jsonDict["dependencies"]) > 0):
+        dockerFileString.write("RUN conda install -y ")
+        for package in jsonDict["dependencies"]:
+            dockerFileString.write(str(package) + "==" + jsonDict["dependencies"][package] + " ")
+
+    if(jsonDict["project_repo"]):
+        dockerFileString.write('RUN git clone "' + jsonDict["project_repo"] + '"\n')
 
     dockerFileString.write("\n")
     osPackageStringLine = appendOSPackages(jsonDict)
     dockerFileString.write(osPackageStringLine)
     volumeStringLine = appendVolume(jsonDict)
     dockerFileString.writelines(volumeStringLine)
-    dockerFileString.write("CMD ['bash']")
+    dockerFileString.write('CMD ["python"]')
 
     return dockerFileString.getvalue()
 
