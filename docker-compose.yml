@@ -6,6 +6,8 @@ services:
     image: autocontain/server
     ports:
       - 8888:8888
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
   web:
     container_name: web
