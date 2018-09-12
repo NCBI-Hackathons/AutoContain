@@ -22,11 +22,11 @@ def getDockerfile(jsonDict):
         dockerFileString.write("RUN conda install -y ")
         for package in jsonDict["dependencies"]:
             dockerFileString.write(str(package) + "==" + jsonDict["dependencies"][package] + " ")
+    dockerFileString.write("\n")
 
     if(jsonDict["project_repo"]):
         dockerFileString.write('RUN git clone "' + jsonDict["project_repo"] + '"\n')
 
-    dockerFileString.write("\n")
     osPackageStringLine = appendOSPackages(jsonDict)
     dockerFileString.write(osPackageStringLine)
     volumeStringLine = appendVolume(jsonDict)
